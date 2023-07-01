@@ -22,11 +22,16 @@ public class UserController {
 	    public void initRoleAndUser() {
 	        userService.initRoleAndUser();
 	    }
+	    
+	    @PostMapping({"/registerNewUser"})
+	    public User registerNewUser(@RequestBody User user) throws Exception {
+	        return userService.registerNewUser(user);
+	    }
 	
-	@PostMapping({"/registerNewUser"})
-    public User registerNewUser(@RequestBody User user) throws Exception {
-        return userService.registerNewUser(user);
-    }
+//	@PostMapping({"/registerNewUser"})
+//    public User registerNewUser(@RequestBody User user) throws Exception {
+//        return userService.registerNewUser(user);
+//    }
 	
 	  @GetMapping({"/forAdmin"})
 	   @PreAuthorize("hasRole('Admin')")
