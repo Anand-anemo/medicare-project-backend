@@ -49,7 +49,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	                		"/product/getProductDetails/{isSingleProductCheckout}/{productId}",
 	                		"/placeOrder",
 	                		"/addToCart/{productId}",
-	                		"/getCartDetails"
+	                		"/getCartDetails",
+	                		"/getOrderDetails",
+	                		"/username",
+	                		"/createTransaction/{amount}",
+	                		"/product/category/{id}",
+	                		"/product/category/active/{id}"
 	                ).permitAll()
 	                .antMatchers(HttpHeaders.ALLOW).permitAll()
 	                .anyRequest().authenticated()

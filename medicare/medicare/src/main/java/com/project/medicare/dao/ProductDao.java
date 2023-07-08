@@ -17,6 +17,8 @@ public interface ProductDao extends CrudRepository<Product,Integer> {
 	public List<Product> findByProductNameContainingIgnoreCaseOrProductDescriptionContainingIgnoreCase(
             String key1, String key2, Pageable pageable
     );
+	List<Product>findByActive(Boolean b);
+	List<Product>findByCategoryAndActive(Category c,Boolean b);
    
 
 	

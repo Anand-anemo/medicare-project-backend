@@ -78,5 +78,7 @@ public class UserService {
 	  public String getEncodedPassword(String password) {
 	        return passwordEncoder.encode(password);
 	    }
+	 
+	
 
 }

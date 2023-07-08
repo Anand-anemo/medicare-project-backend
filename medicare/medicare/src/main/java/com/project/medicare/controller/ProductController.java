@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	//ADD PRODUCT
+	@PreAuthorize("hasRole('Admin')")
 	@PostMapping(value={"/"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<Product> addProduct(@RequestPart Product product , 
 			@RequestPart("imageFile") MultipartFile[] file) {
@@ -80,11 +82,13 @@ public class ProductController {
 		
 	}
 	//UPDATE PRODUCT
+	@PreAuthorize("hasRole('Admin')")
 	@PutMapping("/")
 	public Product updateProduct(@RequestBody Product product) {
 		return this.productService.updateProduct(product);
 	}
 	//DELETE PRODUCT
+	 @PreAuthorize("hasRole('Admin')")
 	@DeleteMapping("/{productId}")
 	public void deleteProduct(@PathVariable("productId")int productId) {
 		this.productService.deleteProduct(productId);
@@ -100,12 +104,29 @@ public class ProductController {
 		
 	}
 	//getting product details for buying and also checking for single product checkout
+	@PreAuthorize("hasRole('User')")
 	@GetMapping({"/getProductDetails/{isSingleProductCheckout}/{productId}"})
     public List<Product> getProductDetails(@PathVariable(name = "isSingleProductCheckout" ) boolean isSingleProductCheckout,
                                            @PathVariable(name = "productId")  Integer productId) {
         return productService.getProductDetails(isSingleProductCheckout, productId);
     }
+	
+	//getting active product
+	@GetMapping("/active")
+	public List<Product> getActiveProduct(@RequestParam(defaultValue="0") int pageNumber , 
+			 @RequestParam(defaultValue="")String searchKey){
+		return productService.getActiveProduct(pageNumber , searchKey);
 	}
+	
+	@GetMapping("/category/active/{id}")
+	public List<Product> getActiveProductOfCategory(@PathVariable("id") int id){
+		Category category = new Category();
+		category.setId(id);
+		return productService.getActiveProductOfCategory(category);
+	}
+	
+	
+}
 	
 	
 

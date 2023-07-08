@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class OrderDetails {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
@@ -21,11 +22,17 @@ public class OrderDetails {
     private Product product;
     @OneToOne
     private User user;
+    
+
+    private String transactionId;
 	
     
-    public OrderDetails(String orderFullName, String orderAddress, String orderContactNumber,
-			String orderAlternateContactNumber, String orderStatus, Double orderAmount, Product product, User user) {
+   
+    public OrderDetails( String orderFullName, String orderAddress, String orderContactNumber,
+			String orderAlternateContactNumber, String orderStatus, Double orderAmount, Product product, User user,
+			String transactionId) {
 		super();
+	
 		this.orderFullName = orderFullName;
 		this.orderAddress = orderAddress;
 		this.orderContactNumber = orderContactNumber;
@@ -34,7 +41,25 @@ public class OrderDetails {
 		this.orderAmount = orderAmount;
 		this.product = product;
 		this.user = user;
+		this.transactionId = transactionId;
 	}
+
+	public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -76,6 +101,18 @@ public class OrderDetails {
 	}
 	public void setOrderAmount(Double orderAmount) {
 		this.orderAmount = orderAmount;
+	}
+	
+	public OrderDetails() {
+		
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 }

@@ -89,6 +89,24 @@ public class ProductService {
            
         }
     }
+	//Getting active product
+	public List<Product> getActiveProduct(int pageNumber , String searchKey){
+		Pageable pageable = PageRequest.of(pageNumber,12);
+		if(searchKey.equals("")) {
+			 return (List<Product>) this.productDao.findByActive(true);
+	            
+	        } else {
+	            return (List<Product>)
+	            		productDao.findByProductNameContainingIgnoreCaseOrProductDescriptionContainingIgnoreCase(
+	                    searchKey, searchKey, pageable
+	            );
+	        }
+		
+	}
+	//Getting active product category wise
+	public List<Product> getActiveProductOfCategory(Category c){
+		return this.productDao.findByCategoryAndActive(c, true);
+	}
 
 
 
